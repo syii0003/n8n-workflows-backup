@@ -1,0 +1,288 @@
+{
+  "active": false,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-14T07:59:15.577Z",
+  "id": "Th1BjQsw8R2Nwy9k",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "AI news",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 6
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1200,
+        400
+      ],
+      "id": "c8110406-33bb-4a4d-bb37-b48b64c72f39",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://newsapi.org/v2/everything?q=ai&apiKey=12dbfe2927174ff5bdac2128dac3a3f0",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -860,
+        40
+      ],
+      "id": "6436e56d-2807-436f-a19d-5ea8c188c4a8",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "https://gnews.io/api/v4/search?q=ai&lang=en&apikey=19e8932f741523ca1aaf2148da436ffb",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -840,
+        540
+      ],
+      "id": "c8fddf61-52ff-4971-ab3f-6be74e0bca86",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2dbfb58f-6dbc-4cce-aa4f-4b301237f38c",
+              "name": "articles",
+              "value": "={{ $json.articles }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -700,
+        20
+      ],
+      "id": "e8cd809b-21db-4ddc-ab04-c54237bcb07e",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d537ac8c-fdd5-433e-ba2d-6aa71b69e5fe",
+              "name": "articles",
+              "value": "={{ $json.articles }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -620,
+        540
+      ],
+      "id": "523bc6f8-e5ae-4f89-a598-ba7d8e613619",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        -200,
+        280
+      ],
+      "id": "a6972654-7ff9-4efa-88ee-47c163acc55b",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=你是一名AI新闻编辑，负责筛选、翻译和整理最新的AI行业动态，并确保信息清晰、美观地呈现给读者。  \n\n 任务要求：  \n 1. 从{{ $json.articles }}中筛选1条仅与AI技术进展和应用相关的新闻，忽略无关信息。  \n 2. 精准翻译为中文，并保留业内常见的英文术语（如Neural Networks、Reinforcement Learning等，不必强制翻译）。  \n 3. 确保每条新闻附带原始URL，方便读者获取详细信息。  \n 4. 在开头注明当天日期，例如：“早上好，今天是2025年3月26日，以下是最新的AI行业新闻。”  \n 5. 对输出内容进行排版美化，使用适当的换行、编号、粗体等格式，使信息更易阅读。例如：  \n   📌 1. AI突破：新型Transformer架构提升文本理解能力  \n   🔗 [原文链接](URL)  \n   研究人员开发了一种改进版的 Transformer 结构，相比传统模型，在文本分类和摘要生成方面提升了20%的准确率……  \n\n   📌 2. OpenAI 发布 GPT-5，参数量达 2 万亿  \n   🔗 [原文链接](URL)  \n   最新的 GPT-5 具备更强的推理能力，能够更自然地处理多轮对话，并支持实时检索……  \n\n   请确保最终输出内容清晰、美观，方便读者快速获取关键信息。",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        0,
+        0
+      ],
+      "id": "1ecf5b38-ab8f-4b41-b9ae-cf58ecdf3675",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        40
+      ],
+      "id": "410b227d-020e-4aaf-a755-25ca75a9920a",
+      "name": "DeepSeek Chat Model",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "fvQYG64dDf0HRIhm",
+          "name": "DeepSeek account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=你是一名AI新闻编辑，负责筛选、翻译和整理最新的AI行业动态，并确保信息清晰、美观地呈现给读者。  \n\n 任务要求：  \n 1. 从{{ $json.articles }}中筛选1条仅与AI技术进展和应用相关的新闻，忽略无关信息。  \n 2. 精准翻译为中文，并保留业内常见的英文术语（如Neural Networks、Reinforcement Learning等，不必强制翻译）。  \n 3. 确保每条新闻附带原始URL，方便读者获取详细信息。  \n 4. 在开头注明当天日期，例如：“早上好，今天是2025年3月26日，以下是最新的AI行业新闻。”  \n 5. 对输出内容进行排版美化，使用适当的换行、编号、粗体等格式，使信息更易阅读。例如：  \n   📌 1. AI突破：新型Transformer架构提升文本理解能力  \n   🔗 [原文链接](URL)  \n   研究人员开发了一种改进版的 Transformer 结构，相比传统模型，在文本分类和摘要生成方面提升了20%的准确率……  \n\n   📌 2. OpenAI 发布 GPT-5，参数量达 2 万亿  \n   🔗 [原文链接](URL)  \n   最新的 GPT-5 具备更强的推理能力，能够更自然地处理多轮对话，并支持实时检索……  \n\n   请确保最终输出内容清晰、美观，方便读者快速获取关键信息。",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        20,
+        400
+      ],
+      "id": "b821564d-7704-4f02-b9ae-6de22a2ea958",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "model": "deepseek-r1:8b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        20,
+        640
+      ],
+      "id": "c569c766-1585-4bfd-be89-fc40bada0b09",
+      "name": "Ollama Chat Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "seq1ftO05NmqftOw",
+          "name": "Ollama account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-14T07:59:15.577Z",
+  "versionId": "97e157ac-c87a-4e19-9c9b-442ce4d60258"
+}
