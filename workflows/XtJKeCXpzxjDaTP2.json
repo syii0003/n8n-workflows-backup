@@ -1,0 +1,529 @@
+{
+  "active": false,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "XML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "XML": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-14T10:06:25.548Z",
+  "id": "XtJKeCXpzxjDaTP2",
+  "meta": null,
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -2700,
+        900
+      ],
+      "id": "51950296-a8f0-4bd1-8c00-630c91e7dc80",
+      "name": "When chat message received",
+      "webhookId": "0f5fbbdf-2d53-4b73-bbba-22622396cf46"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.chatInput }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -2520,
+        860
+      ],
+      "id": "21ec4540-2a82-4c7d-82d2-d6a1b3193979",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.xml",
+      "typeVersion": 1,
+      "position": [
+        -2320,
+        840
+      ],
+      "id": "1edb376b-b60f-4048-b7c1-f36adbba3580",
+      "name": "XML"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "urlset.url",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -2140,
+        880
+      ],
+      "id": "88bba897-b025-4bc4-a4d0-5515b2bb8631",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -1940,
+        860
+      ],
+      "id": "0a9b6246-6ee9-4fed-9161-40ce7e3ac578",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -1740,
+        840
+      ],
+      "id": "6e821f8f-754c-4ae3-a195-e8071d11530b",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:11235/crawl",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "urls",
+              "value": "={{ $json.loc }}"
+            },
+            {
+              "name": "priority",
+              "value": "10"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1460,
+        860
+      ],
+      "id": "19d4d0be-4b9d-44f0-808a-ef19124a430e",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "amount": 6
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1020,
+        840
+      ],
+      "id": "aed162bb-c91f-4f01-bad6-fd7d8b1d17e8",
+      "name": "Wait",
+      "webhookId": "c8186be7-9578-4621-b806-25036f990025"
+    },
+    {
+      "parameters": {
+        "url": "=http://host.docker.internal:11235/task/{{ $json.task_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -820,
+        800
+      ],
+      "id": "152ec409-dcb0-40b4-8cc6-a2a354421735",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "807b8fa3-6760-4a9e-aeb3-6c891e0a01b8",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "completed",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -580,
+        840
+      ],
+      "id": "e2a68115-3bab-4ed5-8f61-c15e1110471e",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=角色设定：\n你是一名信息结构化和知识库开发的专家，请始终保持专业态度。你的任务是将 markdown 数据整理为适合 LLM 驱动的 RAG 知识库的结构化、易读格式。\n\n任务要求：  \n\n1. 内容解析  \n   - 识别 markdown 数据中的关键内容和主要结构。  \n\n2. 结构化整理  \n   - 以清晰的标题和分层逻辑组织信息，使其易于检索和理解。  \n   - 保留所有可能对回答用户查询有价值的细节。  \n\n3. 创建 FAQ（如适用）  \n   - 根据内容提炼出常见问题，并提供清晰、直接的解答。  \n\n4. 提升可读性  \n   - 采用项目符号、编号列表、段落分隔等格式优化排版，使内容更直观。  \n\n5. 优化输出  \n   - 严格去除 AI 生成的附加说明，仅保留清理后的核心数据。 \n\n响应规则：  \n\n1. 完整性：确保所有相关信息完整保留，避免丢失对搜索和理解有价值的内容。  \n2. 精准性：FAQ 需紧密围绕内容，确保清晰、简洁且符合用户需求。  \n3. 结构优化：确保最终输出便于分块存储、向量化处理，并支持高效检索。\n\n数据输入：\n<markdown>{{ $json.result.markdown }}</markdown>\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        -400,
+        700
+      ],
+      "id": "3b940e2c-5d6f-44df-a9c8-ea235f1cb481",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5bb8dde4-4808-4005-94a3-56a8e88567a4",
+              "name": "task_id",
+              "value": "={{ $('HTTP Request1').item.json.task_id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -420,
+        920
+      ],
+      "id": "e9796171-4b46-4810-b325-47b40194235c",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "output",
+        "options": {
+          "fileName": "={{new Date().toISOString()}}.md"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -20,
+        540
+      ],
+      "id": "00cecf1a-65a2-45df-982b-f1bf0c277883",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "=/home/node/{{new Date().toISOString()}}.md",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        180,
+        420
+      ],
+      "id": "18547e00-be09-47e0-8ddd-835810a349f0",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1300,
+        940
+      ],
+      "id": "ce0688fd-049d-419c-86e2-97f00b4d9f0a",
+      "name": "Wait1",
+      "webhookId": "ea1444ec-e5d8-44b5-9fed-22e72793c219"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=把{{ $json.output }}写入/home/node/{{new Date().toISOString()}}.md文件中",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        0,
+        0
+      ],
+      "id": "dfa7012d-9ac2-4043-abc5-e5f96dd6896c",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-mcp.mcpClientTool",
+      "typeVersion": 1,
+      "position": [
+        280,
+        240
+      ],
+      "id": "28fd1d84-0522-45d2-a7ca-27659cc3eac7",
+      "name": "MCP Client",
+      "credentials": {}
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-mcp.mcpClientTool",
+      "typeVersion": 1,
+      "position": [
+        140,
+        240
+      ],
+      "id": "cfa6d1d4-32d7-403e-ab3b-a650879190f2",
+      "name": "MCP Client1",
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        -280,
+        920
+      ],
+      "id": "0a7fa0c8-0dd8-4a0c-acf8-f0f9df25342a",
+      "name": "DeepSeek Chat Model"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        -20,
+        220
+      ],
+      "id": "52f4ebb4-dfbb-4477-bb69-fdfded4561d8",
+      "name": "DeepSeek Chat Model1"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-14T10:06:25.548Z",
+  "versionId": "ca77dbba-1948-45ef-9d78-c5861d6fb83c"
+}
