@@ -65,7 +65,7 @@
       "main": [
         [
           {
-            "node": "AI Agent1",
+            "node": "AI Agent",
             "type": "main",
             "index": 0
           }
@@ -89,6 +89,17 @@
           {
             "node": "AI Agent1",
             "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
             "index": 0
           }
         ]
@@ -235,7 +246,7 @@
       "name": "DeepSeek Chat Model",
       "credentials": {
         "deepSeekApi": {
-          "id": "fvQYG64dDf0HRIhm",
+          "id": "zhNizCxXAyWaJKJ6",
           "name": "DeepSeek account"
         }
       }
@@ -274,6 +285,29 @@
           "name": "Ollama account"
         }
       }
+    },
+    {
+      "parameters": {
+        "sendTo": "tommyysshh@gmail.com",
+        "subject": "today's news",
+        "message": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        360,
+        0
+      ],
+      "id": "6d0f449d-ad95-4461-9765-eefed445ffad",
+      "name": "Gmail",
+      "webhookId": "8b6239ce-3e80-4fbb-8ef9-a901fce0e227",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "VhUDhLes7qZtplXo",
+          "name": "Gmail account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -283,6 +317,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-05-14T07:59:15.577Z",
-  "versionId": "97e157ac-c87a-4e19-9c9b-442ce4d60258"
+  "updatedAt": "2025-05-14T10:37:03.000Z",
+  "versionId": "2815dbbc-21aa-49b7-bc49-07d0aa8e9337"
 }
