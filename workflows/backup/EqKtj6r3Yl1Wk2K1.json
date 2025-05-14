@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "/": {
       "main": [
@@ -829,7 +829,11 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "staticData": null,
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
   "tags": [
     {
       "createdAt": "2025-05-14T07:38:19.814Z",
@@ -838,7 +842,7 @@
       "name": "backup"
     }
   ],
-  "triggerCount": 0,
-  "updatedAt": "2025-05-14T07:52:50.000Z",
+  "triggerCount": 1,
+  "updatedAt": "2025-05-14T08:00:51.000Z",
   "versionId": "fb523f4a-0c04-4549-9ee9-4c767f57d9c2"
 }
