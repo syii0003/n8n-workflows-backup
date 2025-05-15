@@ -193,7 +193,9 @@
   },
   "createdAt": "2025-05-14T10:06:27.540Z",
   "id": "7hk3J0a0oNutKPz3",
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "build knowledge base",
   "nodes": [
     {
@@ -303,7 +305,13 @@
         860
       ],
       "id": "19d4d0be-4b9d-44f0-808a-ef19124a430e",
-      "name": "HTTP Request1"
+      "name": "HTTP Request1",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "Re5Yskh5lKF6yAbC",
+          "name": "Header Auth account"
+        }
+      }
     },
     {
       "parameters": {
@@ -333,7 +341,13 @@
         800
       ],
       "id": "152ec409-dcb0-40b4-8cc6-a2a354421735",
-      "name": "HTTP Request2"
+      "name": "HTTP Request2",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "Re5Yskh5lKF6yAbC",
+          "name": "Header Auth account"
+        }
+      }
     },
     {
       "parameters": {
@@ -454,7 +468,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=把{{ $json.output }}写入/home/node/{{new Date().toISOString()}}.md文件中",
+        "text": "=1.在/home/node/下，新建一个",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -467,30 +481,6 @@
       "name": "AI Agent1"
     },
     {
-      "parameters": {},
-      "type": "n8n-nodes-mcp.mcpClientTool",
-      "typeVersion": 1,
-      "position": [
-        280,
-        240
-      ],
-      "id": "28fd1d84-0522-45d2-a7ca-27659cc3eac7",
-      "name": "MCP Client",
-      "credentials": {}
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-mcp.mcpClientTool",
-      "typeVersion": 1,
-      "position": [
-        140,
-        240
-      ],
-      "id": "cfa6d1d4-32d7-403e-ab3b-a650879190f2",
-      "name": "MCP Client1",
-      "credentials": {}
-    },
-    {
       "parameters": {
         "options": {}
       },
@@ -501,7 +491,13 @@
         920
       ],
       "id": "0a7fa0c8-0dd8-4a0c-acf8-f0f9df25342a",
-      "name": "DeepSeek Chat Model"
+      "name": "DeepSeek Chat Model",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "zhNizCxXAyWaJKJ6",
+          "name": "DeepSeek account"
+        }
+      }
     },
     {
       "parameters": {
@@ -514,7 +510,13 @@
         220
       ],
       "id": "52f4ebb4-dfbb-4477-bb69-fdfded4561d8",
-      "name": "DeepSeek Chat Model1"
+      "name": "DeepSeek Chat Model1",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "zhNizCxXAyWaJKJ6",
+          "name": "DeepSeek account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -524,6 +526,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-05-14T10:37:53.000Z",
-  "versionId": "d460e19f-eb29-41c7-8dc7-cdc257341c82"
+  "updatedAt": "2025-05-15T03:34:10.000Z",
+  "versionId": "6c026d19-d1e6-474f-aba6-80329fa7c480"
 }
