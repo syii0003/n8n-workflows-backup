@@ -98,7 +98,7 @@
       "main": [
         [
           {
-            "node": "Gmail",
+            "node": "Convert to File",
             "type": "main",
             "index": 0
           }
@@ -134,7 +134,7 @@
     },
     {
       "parameters": {
-        "url": "https://newsapi.org/v2/everything?q=ai&apiKey=12dbfe2927174ff5bdac2128dac3a3f0",
+        "url": "https://newsapi.org/v2/everything?q=finance&apiKey=12dbfe2927174ff5bdac2128dac3a3f0",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -207,7 +207,9 @@
       "name": "Edit Fields1"
     },
     {
-      "parameters": {},
+      "parameters": {
+        "numberInputs": 3
+      },
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
@@ -239,8 +241,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
       "typeVersion": 1,
       "position": [
-        -240,
-        40
+        0,
+        200
       ],
       "id": "410b227d-020e-4aaf-a755-25ca75a9920a",
       "name": "DeepSeek Chat Model",
@@ -260,8 +262,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.9,
       "position": [
-        20,
-        400
+        -20,
+        580
       ],
       "id": "b821564d-7704-4f02-b9ae-6de22a2ea958",
       "name": "AI Agent1"
@@ -274,8 +276,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
       "typeVersion": 1,
       "position": [
-        20,
-        640
+        0,
+        740
       ],
       "id": "c569c766-1585-4bfd-be89-fc40bada0b09",
       "name": "Ollama Chat Model",
@@ -296,8 +298,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        360,
-        0
+        400,
+        -140
       ],
       "id": "6d0f449d-ad95-4461-9765-eefed445ffad",
       "name": "Gmail",
@@ -308,6 +310,34 @@
           "name": "Gmail account"
         }
       }
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "output",
+        "options": {
+          "fileName": ""
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        540,
+        500
+      ],
+      "id": "ddd1705b-d3bc-410e-88c8-f0f74c2c00d5",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1,
+      "position": [
+        -260,
+        500
+      ],
+      "id": "e51cc661-8823-496c-b342-b4df32b07501",
+      "name": "MCP Client1"
     }
   ],
   "pinData": {},
@@ -317,6 +347,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-05-14T10:37:03.000Z",
-  "versionId": "2815dbbc-21aa-49b7-bc49-07d0aa8e9337"
+  "updatedAt": "2025-05-21T09:39:14.000Z",
+  "versionId": "5636ba3c-7a10-4bb5-a7ef-0e2f34e692fc"
 }
