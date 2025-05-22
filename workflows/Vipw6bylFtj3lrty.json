@@ -1,0 +1,307 @@
+{
+  "active": true,
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-22T10:23:50.437Z",
+  "id": "Vipw6bylFtj3lrty",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "ocr",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "上传图片",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "images",
+              "fieldType": "file",
+              "acceptFileTypes": ".jpg,.png"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -600,
+        200
+      ],
+      "id": "d69c7ffb-8281-445a-8c7c-ed865b2d50d8",
+      "name": "On form submission",
+      "webhookId": "14350020-314e-40ea-83e4-7df243191c7d"
+    },
+    {
+      "parameters": {
+        "jsCode": "let results = [];\nfor (const item of $input.all()) {\n  for (const key of Object.keys(item.binary)) {\n    results.push(\n      {json: item.json,binary: { data: item.binary[key] },});}}\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -180,
+        240
+      ],
+      "id": "07e45114-c3fc-4994-aed8-b1f2d2729548",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        380,
+        500
+      ],
+      "id": "2473b701-23e8-4c7c-b8ec-77e6b2924369",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "operation": "binaryToPropery",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        280,
+        0
+      ],
+      "id": "f14349f6-66c7-40c6-b426-671ff066fbd6",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyA3jVcBmq-8yhMV5adt2ZQpnsesZnus5Og",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"contents\": [\n  {\n    \"parts\": [\n        {\"text\": \"请从图片中提取全部文本内容。严格按照图片中的原有格式和排版进行输出。输出中不得包含任何额外的说明文字、解释、前言、后语或图片中不存在的符号。只输出纯粹的提取结果。\"},\n        {\"inline_data\": \n          {\"mime_type\": \"image/jpeg\",\n            \"data\": \"{{ $json.data }}\"\n          }\n        }]\n  }\n],\n\"generationConfig\": {\"temperature\": 0.2,\"maxOutputTokens\": 65536}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        500,
+        60
+      ],
+      "id": "ef599579-0426-45cc-841c-8768517d58b1",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1uYztwQRbFiTP-6Ik9OFfnPZmcKBsJyUG8a0NlRXNUFI",
+          "mode": "list",
+          "cachedResultName": "ocr",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uYztwQRbFiTP-6Ik9OFfnPZmcKBsJyUG8a0NlRXNUFI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uYztwQRbFiTP-6Ik9OFfnPZmcKBsJyUG8a0NlRXNUFI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "candidates",
+              "displayName": "candidates",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "usageMetadata",
+              "displayName": "usageMetadata",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "modelVersion",
+              "displayName": "modelVersion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        720,
+        60
+      ],
+      "id": "bd8266de-7757-4dfa-8553-8ba06f8c147f",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "7ITwoiSS0JcYNozs",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1260,
+        240
+      ],
+      "id": "cd527ddc-aee0-4e2d-8601-fd368f673025",
+      "name": "Wait",
+      "webhookId": "e237fd68-fd88-48b1-9d0c-6c39bcd28776"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "5306fc97-cb08-43ad-b4ac-fcf96a5ba32e",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "77050e6c-18ed-4086-ac1b-d6ae746dd893",
+      "name": "Webhook",
+      "webhookId": "5306fc97-cb08-43ad-b4ac-fcf96a5ba32e"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.2,
+      "position": [
+        940,
+        60
+      ],
+      "id": "69c5c06e-5922-4dff-afbc-3701765e3b49",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 2,
+  "updatedAt": "2025-05-22T10:26:33.000Z",
+  "versionId": "42f6450b-43b5-4580-9d6b-a9b289e8c948"
+}
